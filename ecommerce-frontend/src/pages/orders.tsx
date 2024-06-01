@@ -3,7 +3,7 @@ import TableHOC from '../components/admin/TableHOC'
 import {Column}from "react-table"
 import { Link } from 'react-router-dom';
 
-type Orders=()=>{
+type DataType=()=>{
     _id:string;
     amount:number;
     quantity:number;
