@@ -1,17 +1,28 @@
 import { Response,Request, NextFunction } from "express";
 import { User } from "../models/user.js";
 import { NewUserRequestBody } from "../types/types.js";
+import ErrorHandler from "../utils/utility-class.js";
+import { TryCatch } from "../middlewares/error.js";
 
 
-const newUser =async(
+const newUser =TryCatch(async(
     req:Request<{},{},NewUserRequestBody>,
     res:Response,
     next:NextFunction)=>{
-    try {
-        return next(new Error());
-        const {name,email,photo,gender,_id,dob}=req.body;
+     const {name,email,photo,gender,_id,dob}=req.body;
 
-        const user=await User.create({
+      let user = await User.findById(_id);
+
+        if (user)
+          return res.status(200).json({
+        success: true,
+        message: `Welcome, ${user.name}`,
+        });
+
+        if (!_id || !name || !email || !photo || !gender || !dob)
+            return next(new ErrorHandler("Please add all fields", 400));
+
+        user=await User.create({
             name,
             email,
             photo,
@@ -24,12 +35,48 @@ const newUser =async(
             success:true,
             message:`Welcome,${user.name}`,
         })
-    } catch (error) {
-         return res.status(400).json({
-            success:false,
-            message:error,
-        })
-    }
+    
+    
+});
+
+ const getAllUsers = TryCatch(async (req, res, next) => {
+  const users = await User.find({});
+
+  return res.status(200).json({
+    success: true,
+    users,
+  });
+});
+
+ const getUser = TryCatch(async (req, res, next) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
+
+  if (!user) return next(new ErrorHandler("Invalid Id", 400));
+
+  return res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+ const deleteUser = TryCatch(async (req, res, next) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
+
+  if (!user) return next(new ErrorHandler("Invalid Id", 400));
+
+  await user.deleteOne();
+
+  return res.status(200).json({
+    success: true,
+    message: "User Deleted Successfully",
+  });
+});
+
+export {newUser,
+    getAllUsers,
+    getUser,
+    deleteUser
 };
 
-export {newUser};
