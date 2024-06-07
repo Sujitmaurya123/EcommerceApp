@@ -1,5 +1,5 @@
 import express from 'express'
-
+import cors from "cors"
 
 
 // Importing Routes
@@ -37,6 +37,7 @@ export const myCache =new NodeCache();
 const app=express();
 app.use(express.json());// using middleware 
 app.use(morgon("dev"));
+app.use(cors());
 
 app.get("/",(req,res)=>{
     res.send("API Working with /api/v1");
