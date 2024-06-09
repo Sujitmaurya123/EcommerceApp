@@ -11,7 +11,6 @@ import { getUser } from "./redux/api/userAPI";
 import { UserReducerInitialState } from "./types/reducer-types";
 import ProtectedRoute from "./components/protected-route";
 
-
 const Home =lazy(()=>import("./pages/home"));
 const Search =lazy(()=>import("./pages/search"));
 const Cart =lazy(()=>import("./pages/cart"));
@@ -19,7 +18,7 @@ const Shipping =lazy(()=>import("./pages/shipping"));
 const Login =lazy(()=>import("./pages/login"));
 const Orders=lazy(()=>import("./pages/orders"))
 const OrderDetails=lazy(()=>import("./pages/order-details"))
-
+const NotFound =lazy(()=>import("./pages/not-found"))
 // Admin Routes Importing
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
 const Products = lazy(() => import("./pages/admin/products"));
@@ -115,7 +114,7 @@ const App = () => {
             />
           </Route>
 
-
+            <Route path="*"  element={<NotFound />}/>
     </Routes>
    </Suspense>
    <Toaster  position="bottom-center" />
