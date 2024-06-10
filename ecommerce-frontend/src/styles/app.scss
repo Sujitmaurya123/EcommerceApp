@@ -73,7 +73,19 @@ $color3:#006888;
     margin: 1rem 0;
     text-align: center;
 }
-
+ .head{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.2rem;
+}
+.logo{
+    margin-left: 14px;
+}
+.headlogo{
+    color: #035c77;
+}
 .header{
 
 @include flex(row,flex-end,stretch, 1.2rem);

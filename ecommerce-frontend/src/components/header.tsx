@@ -26,6 +26,11 @@ const Header = ({user}:PropsType) => {
     };
 
   return (
+   
+
+    <header  className='head' >
+
+    <nav className='logo'><h2 className='headlogo'>E-App</h2></nav>
     <nav className='header'>
      <Link onClick={()=>setIsOpen(false)} to={"/"}>Home</Link>
       <Link onClick={()=>setIsOpen(false)} to={"/search"}>
@@ -62,6 +67,8 @@ const Header = ({user}:PropsType) => {
       </Link>
       )}
     </nav>
+    </header>
+    
   )
 }
 
